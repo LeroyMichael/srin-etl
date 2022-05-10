@@ -15,12 +15,12 @@ CORS(app)
 # Create class for resource
 class Etl(Resource):
         # Get method
-        def get(self):
+        def post(self):
             response = {"msg":"success"}
             return response
 
 # Resource setup
-api.add_resource(Etl, '/etl', methods=["GET"])
+api.add_resource(Etl, '/etl', methods=["post"])
 
 if __name__ == "__main__":
     app.run(debug=True)
