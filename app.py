@@ -20,9 +20,9 @@ class Etl(Resource):
         # Get method
         def post(self):
             # Extract
-            customer = fromcsv('Customer_ID_Superstore.csv')
-            product = fromcsv('Product_ID_Superstore.csv')
-            final = fromcsv('final_superstore.csv')
+            customer = fromcsv('/assets/Customer_ID_Superstore.csv')
+            product = fromcsv('/assets/Product_ID_Superstore.csv')
+            final = fromcsv('/assets/final_superstore.csv')
 
             # Join table
             merge = join(final, customer, key='customer_id')
