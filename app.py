@@ -28,12 +28,8 @@ class Etl(Resource):
             merge = join(final, customer, key='customer_id')
             merge = join(merge, product, key='product_id')
             
-
-            # Load
-            # Load
+            # Load to csv
             tocsv(merge, 'output.csv')
-            output = fromcsv('output.csv')
-            look(output)
 
             with open('output.csv') as output:
                 response = Response(output, mimetype='text/csv')
