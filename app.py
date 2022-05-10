@@ -1,7 +1,8 @@
 # import library
-from flask import Flask, request
+from flask import Flask, jsonify, Response
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from petl import fromcsv, look, join, tocsv
 
 # Inisiation object Flask
 app = Flask(__name__)
@@ -12,11 +13,32 @@ api = Api(app)
 # Inisiation object CORS
 CORS(app)
 
+
+
 # Create class for resource
 class Etl(Resource):
         # Get method
         def post(self):
-            response = {"msg":"success"}
+            # Extract
+            customer = fromcsv('Customer_ID_Superstore.csv')
+            product = fromcsv('Product_ID_Superstore.csv')
+            final = fromcsv('final_superstore.csv')
+
+            # Join table
+            merge = join(final, customer, key='customer_id')
+            merge = join(merge, product, key='product_id')
+            
+
+            # Load
+            # Load
+            tocsv(merge, 'output.csv')
+            output = fromcsv('output.csv')
+            look(output)
+
+            with open('output.csv') as output:
+                response = Response(output, mimetype='text/csv')
+                response.headers['Content-Disposition'] = u'attachment; filename=output.csv'
+
             return response
 
 # Resource setup
